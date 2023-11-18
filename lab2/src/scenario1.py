@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 
-def set_scenario_frame(parent, theme_styles):
+
+def set_palindrome_frame(parent, theme_styles):
     # Function to find palindromes in a given line of text
     def find_palindromes():
         # Get the text from the entry widget
@@ -21,7 +22,7 @@ def set_scenario_frame(parent, theme_styles):
 
     # Create the find button with the theme style
     find_button = ttk.Button(frame, text="Find Palindromes", command=find_palindromes)
-    find_button.grid(row=0, column=1, sticky=(tk.E, tk.N))
+    find_button.grid(row=0, column=1, padx=5, sticky=(tk.E, tk.N))
 
     # Create a label to display the result with the theme style
     result_label = ttk.Label(frame, text="Palindromes will be shown here.", padding="10",)
