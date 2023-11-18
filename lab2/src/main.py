@@ -1,6 +1,6 @@
-from scenario1 import create_palindrome_frame
+from scenario1 import set_scenario_frame
 from window import ApplicationWindow
 
-app = ApplicationWindow(create_palindrome_frame)
+app = ApplicationWindow(set_scenario_frame)
 app.set_title('Window Skeleton')
 app.mainloop()

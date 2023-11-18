@@ -6,8 +6,8 @@ class ApplicationWindow(tk.Tk):
         super().__init__()
         self.geometry('600x400')  # Default size
         self.themes = {
-            'light': {'bg': 'white', 'text_bg': 'white', 'text_fg': 'black', },
-            'dark': {'bg': 'gray32', 'text_bg': 'gray32', 'text_fg': 'white', }
+            'light': {'bg': 'white', 'text_bg': 'white', 'text_fg': 'black', 'frame': 'LightFrame', 'label': 'LightLabel', 'button': 'LightButton', 'entry': 'LightEntry'},
+            'dark': {'bg': 'gray32', 'text_bg': 'gray32', 'text_fg': 'white', 'frame': 'DarkFrame', 'label': 'DarkLabel', 'button': 'DarkButton', 'entry': 'DarkEntry'}
         }
 
         self._author_info_text = ('''Автор програми:
@@ -17,8 +17,25 @@ class ApplicationWindow(tk.Tk):
         self.theme = theme
         self.set_scenario_frame = set_scenario_frame
 
+        self.create_styles()
         self.create_widgets()
         self.apply_theme()
+
+    def create_styles(self):
+        style = ttk.Style()
+        style.theme_use('default')
+
+        # Light theme styles
+        style.configure('LightFrame.TFrame', background='white')
+        style.configure('LightLabel.TLabel', background='grey', foreground='black')  # Background for the label
+        style.configure('LightButton.TButton', background='white', foreground='black')
+        style.configure('LightEntry.TEntry', background='white', foreground='black')
+
+        # Dark theme styles
+        style.configure('DarkFrame.TFrame', background='gray32')
+        style.configure('DarkLabel.TLabel', background='white', foreground='white')  # Background for the label
+        style.configure('DarkButton.TButton', background='gray32', foreground='white')
+        style.configure('DarkEntry.TEntry', background='gray32', foreground='white')
 
     def create_widgets(self):
         # Create a frame within the main window that can expand and fill
@@ -37,11 +54,10 @@ class ApplicationWindow(tk.Tk):
         self.author_info.grid(row=0, column=0, padx=10, pady=(10, 0), sticky='ew')  # Top padding 10, bottom padding 0
 
         # Create an empty frame to house scenario-specific elements with a thin border
-        self.scenario_frame, self.change_scenario_frame_theme = self.set_scenario_frame(self.main_frame, self.themes[self.theme])
-        self.scenario_frame.configure(relief='groove', borderwidth=1)
+        theme_styles = self.themes[self.theme]
+        self.scenario_frame, self.change_scenario_frame_theme = self.set_scenario_frame(self.main_frame, theme_styles)
+        self.scenario_frame.configure(style=theme_styles['frame'] + '.TFrame', relief='groove', borderwidth=1)
         self.scenario_frame.grid(row=1, column=0, padx=10, pady=10, sticky='nsew')
-        self.scenario_frame.grid_columnconfigure(0, weight=1)
-        self.scenario_frame.grid_rowconfigure(0, weight=1)
 
         # Add a button to toggle the color theme
         self.toggle_button = ttk.Button(self.main_frame, text='Toggle Theme', command=self.toggle_theme)
