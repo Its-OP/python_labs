@@ -14,4 +14,5 @@ from window import ApplicationWindow
 # Scenario 3
 app = ApplicationWindow(set_sentence_frame)
 app.set_title('Sentences')
+
 app.mainloop()
